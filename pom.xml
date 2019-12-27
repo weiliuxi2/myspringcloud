@@ -25,6 +25,7 @@
 		<module>user</module>
 		<module>order</module>
 		<module>eureka-server</module>
+		<module>swagger-test</module>
 	</modules>
 
 
