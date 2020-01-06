@@ -1,0 +1,35 @@
+@SpringBootApplication
+@EnableEurekaClient
+@EnableHystrix
+@EnableFeignClients
+public class UserApplication {
+	@Bean
+	@LoadBalanced
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
+	public static void main(String[] args) {
+		SpringApplication.run(UserApplication.class, args);
+	}
+}
+
+
+1.@EnableFeignClients中已经默认打开了断路器功能，所以这里的启动类上不需要再加@EnableCircuitBreaker注解
+
+2.如果是使用FeignCleints，那么Hystrix的超时时间配置将不生效。如果需要修改超时时间，则配置如下：
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+  
+3.RestTemplate 上使用注解@LoadBalanced，表面开启客户端负载均衡功能。
+
+4.@EnableFeignClients 类似于mybatis，利用FactoryBean 为接口生成代理对象，注入到目标类中
+
+5.hystrix 使用AOP,拦截使用了HystrixCommand 的类，给他他们生成cglib代理
+
+@Aspect
+public class HystrixCommandAspect
+
+@Pointcut("@annotation(com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand)")
+public void hystrixCommandAnnotationPointcut() {
+    }

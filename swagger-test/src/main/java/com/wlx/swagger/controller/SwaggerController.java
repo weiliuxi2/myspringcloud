@@ -30,7 +30,7 @@ public class SwaggerController {
     }
 
     @GetMapping("/test2")
-    @ApiOperation(value = "qqqq", tags = "bbbbb")
+    @ApiOperation(value = "qqqq", tags = "bbbbb",response = LoginForm.class)
     @ApiResponses({
             @ApiResponse(message = "sccccc", code = 200)
     })
